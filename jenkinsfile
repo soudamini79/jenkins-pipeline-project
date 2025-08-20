@@ -12,26 +12,26 @@ pipeline {
         
         stage ('install dependencies') {
             steps {
-                sh 'npm install'
+                bat 'npm install'
             }
         }
 
         stage ('build') {
             steps {
-                sh 'npm run build'
+                bat 'npm run build'
             }
         }
 
         stage ('Test'){
             steps {
-                sh 'npm test'
+                bat 'npm test'
             }
         }
         stage ('run'){
             steps {
                 echo "The application is being started now"
-                sh 'npm start && sleep 10'
-                sh 'curl http://localhost:3000 || true'
+                bat 'npm start && sleep 10'
+                bat 'curl http://localhost:3000 || true'
             }
         }
   
