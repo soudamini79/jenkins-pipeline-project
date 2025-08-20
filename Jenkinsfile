@@ -11,12 +11,16 @@ pipeline {
         }
         stage ('Docker build Image') {
             steps{
+                script {
                 docker.build("jenkins-pipeline-project:${env.BUILD_ID}")
+                }
             }
         } 
         stage ('Docker run') {
             steps{
-                docker.image("jenkins-pipeline-project:${env.BUILD_ID}").run("-p 3000:3000")
+                script{
+                    docker.image("jenkins-pipeline-project:${env.BUILD_ID}").run("-p 3000:3000")
+                }
             }
         } 
 
