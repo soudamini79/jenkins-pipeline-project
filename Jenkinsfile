@@ -6,7 +6,7 @@ pipeline {
         stage ('checkout') {
             steps{
                 //This is going to fetch code from the SCM
-                git url:https://github.com/soudamini79/jenkins-pipeline-project.git
+                git url: 'https://github.com/soudamini79/jenkins-pipeline-project.git', branch: 'main'
             }
         }
         stage ('Docker build Image') {
