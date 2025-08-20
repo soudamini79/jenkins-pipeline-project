@@ -1,0 +1,41 @@
+pipeline {
+
+    agent any
+
+    stages {
+        stage (checkout) {
+            steps{
+                //This is going to fetch code from the SCM
+                checkout scm
+            }
+        }
+        
+        stage (install dependencies) {
+            steps {
+                sh 'npm install'
+            }
+        }
+
+        stage (build) {
+            steps {
+                sh 'npm run build'
+            }
+        }
+
+        stage (Test){
+            steps {
+                sh 'npm test'
+            }
+        }
+        stage (run){
+            steps {
+                echo "The application is being started now"
+                sh 'npm start && sleep 10'
+                sh 'curl http://localhost:3000 || true'
+            }
+        }
+  
+
+    }
+
+}
