@@ -6,35 +6,19 @@ pipeline {
         stage ('checkout') {
             steps{
                 //This is going to fetch code from the SCM
-                checkout scm
+                git url:https://github.com/soudamini79/jenkins-pipeline-project.git
             }
         }
-        
-        stage ('install dependencies') {
-            steps {
-                bat 'npm install'
+        stage ('Docker build Image') {
+            steps{
+                docker.build("jenkins-pipeline-project:${env.BUILD_ID}")
             }
-        }
-
-        stage ('build') {
-            steps {
-                bat 'npm run build'
+        } 
+        stage ('Docker run') {
+            steps{
+                docker.image("jenkins-pipeline-project:${env.BUILD_ID}").run("-p 3000:3000")
             }
-        }
-
-        stage ('Test'){
-            steps {
-                bat 'npm test'
-            }
-        }
-        stage ('run'){
-            steps {
-                echo "The application is being started now"
-                bat 'npm start && sleep 10'
-                bat 'curl http://localhost:3000 || true'
-            }
-        }
-  
+        } 
 
     }
 
